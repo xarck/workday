@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import JobsList from "./JobCard";
+
 const fetchJobs = () => {
     console.log("sdfsd hijsdf");
     const myHeaders = new Headers();

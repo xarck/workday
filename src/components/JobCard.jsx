@@ -50,12 +50,14 @@ const JobCard = ({ job }) => {
 };
 
 const JobsList = ({ jobs }) => {
-    console.log(jobs);
+    console.log("xsfsdf", jobs);
     return (
         <Grid container spacing={4}>
-            {jobs.jdList.map((job) => (
-                <JobCard key={job.jdUid} job={job} />
-            ))}
+            {jobs == undefined
+                ? null
+                : jobs.jdList.map((job) => (
+                      <JobCard key={job.jdUid} job={job} />
+                  ))}
         </Grid>
     );
 };

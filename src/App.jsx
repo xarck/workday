@@ -1,3 +1,9 @@
+import JobBoard from "./components/JobBoard";
+
 export default function App() {
-    return <div>App</div>;
+    return (
+        <div>
+            <JobBoard />
+        </div>
+    );
 }

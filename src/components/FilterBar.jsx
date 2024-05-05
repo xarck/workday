@@ -1,88 +1,92 @@
-import React, { useState } from "react";
-import {
-    Box,
-    TextField,
-    Typography,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    Slider,
-    Checkbox,
-    FormGroup,
-    Button,
-    FormControlLabel,
-} from "@mui/material";
-
-const FilterBar = ({ onFilterChange }) => {
-    const [minExp, setMinExp] = useState(0);
-    const [companyName, setCompanyName] = useState("");
-    const [location, setLocation] = useState("");
-    const [isRemote, setIsRemote] = useState(false);
-    const [techStack, setTechStack] = useState([]);
-    const [role, setRole] = useState("");
-    const [minBasePay, setMinBasePay] = useState(0);
-
-    const handleFilter = () => {
-        onFilterChange({
-            minExp,
-            companyName,
-            location,
-            isRemote,
-            techStack,
-            role,
-            minBasePay,
-        });
+import { useDispatch, useSelector } from "react-redux";
+import { applyFilter } from "../reducers/jobReducer";
+import { useEffect } from "react";
+const FilterBar = () => {
+    const dispatch = useDispatch();
+    const filters = useSelector((state) => state.jobs.filters);
+    useEffect(() => {
+        console.log("sdf");
+        console.log(filters);
+    }, []);
+    const handleFilterChange = (e) => {
+        dispatch(applyFilter({ ...filters, [e.target.name]: e.target.value }));
     };
 
     return (
-        <Box p={2} sx={{ display: "flex", flexWrap: "wrap" }}>
-            <Typography variant="h6" gutterBottom>
-                Filters
-            </Typography>
-            <TextField
-                label="Minimum Experience (years)"
-                type="number"
-                value={minExp}
-                onChange={(e) => setMinExp(e.target.value)}
-                margin="normal"
-                sx={{ flexGrow: 1, marginRight: 1 }} // Adjust margin as needed
-            />
-            <TextField
-                label="Company Name"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-                margin="normal"
-                sx={{ flexGrow: 1, marginRight: 1 }}
-            />
-            <TextField
-                label="Location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                margin="normal"
-                sx={{ flexGrow: 1, marginRight: 1 }}
-            />
-            <FormControlLabel
-                control={
-                    <Checkbox
-                        checked={isRemote}
-                        onChange={(e) => setIsRemote(e.target.checked)}
-                        color="primary"
-                    />
-                }
-                label="Remote"
-                sx={{ marginRight: 1 }}
-            />
-            {/* ... other filter fields (similar structure with sx prop) */}
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleFilter}
-                sx={{ marginLeft: "auto" }}
+        <div className="flex gap-2 mb-14">
+            <select
+                name="role"
+                id="role"
+                className="w-20 px-2 py-2 outline-none border-2 border-[#e9e9e9] rounded-md"
+                value={filters.role}
+                onChange={handleFilterChange}
             >
-                Apply Filters
-            </Button>
-        </Box>
+                <option value="">Role</option>
+                <option value="Android">Android</option>
+                <option value="Frontend">Frontend</option>
+                <option value="IOS">IOS</option>
+            </select>
+            {/* <select
+                name="noOfEmployees"
+                id="noOfEmployees"
+                className="w-1/6 px-2 py-2 outline-none border-2 border-[#e9e9e9] rounded-md"
+                value={filters.noOfEmployees}
+                onChange={handleFilterChange}
+            >
+                <option value="">Number Of Employees</option>
+                <option value="1-10">1-10</option>
+                <option value="11-50">11-50</option>
+                <option value="51-200">51-200</option>
+                <option value="201-500">201-500</option>
+                <option value="500+">500+</option>
+            </select> */}
+            <select
+                name="experience"
+                id="experience"
+                className="w-1/6 px-2 py-2 outline-none border-2 border-[#e9e9e9] rounded-md"
+                value={filters.experience}
+                onChange={handleFilterChange}
+            >
+                <option value="">Experience</option>
+                <option value="1">0-1 year</option>
+                <option value="3">1-3 years</option>
+                <option value="5">3-5 years</option>
+                <option value="6">5+ years</option>
+            </select>
+            {/* <select
+                name="remote"
+                id="remote"
+                className="w-1/6 px-2 py-2 outline-none border-2 border-[#e9e9e9] rounded-md"
+                value={filters.remote}
+                onChange={handleFilterChange}
+            >
+                <option value="">Remote</option>
+                <option value="true">Remote</option>
+                <option value="false">On-site</option>
+            </select> */}
+            <select
+                name="minimumPay"
+                id="minimum Pay"
+                className="w-1/5 px-2 py-2 outline-none border-2 border-[#e9e9e9] rounded-md"
+                value={filters.minimumPay}
+                onChange={handleFilterChange}
+            >
+                <option value="">Minimum Base Pay Salary</option>
+                <option value="5">5 LPA</option>
+                <option value="10">10 LPA</option>
+                <option value="15">15 LPA</option>
+                <option value="25">25 LPA</option>
+                <option value="50">50 LPA</option>
+            </select>
+            <input
+                id="search"
+                name="searchCompany"
+                placeholder="Search Company Name"
+                className="w-1/6 px-2 py-2 outline-none border-2 border-[#e9e9e9] rounded-md"
+                value={filters.searchCompany}
+                onChange={handleFilterChange}
+            />
+        </div>
     );
 };
 

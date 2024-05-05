@@ -1,25 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
+import jobReducer from "./reducers/jobReducer";
 
-const initialState = {
-    jobs: [],
-};
-
-const jobsReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case "SET_JOBS":
-            return {
-                ...state,
-                jobs: action.payload,
-            };
-        default:
-            return state;
-    }
-};
-
-const store = configureStore({
+export const store = configureStore({
     reducer: {
-        jobs: jobsReducer,
+        jobs: jobReducer,
     },
 });
-
-export default store;
